@@ -13,6 +13,29 @@ app.get('/', function (request, response) {
   response.send('Hola Mundo');
 })
 
+// Obtener parámetros de rutas dinámicas
+// Params 'URL/api/pets/1'
+// Los : en la ruta indican que es un valor dinámico (params)
+app.get('/api/v1/pets/:petId', function (request, response) {
+    console.log(request.params);
+    const idPet = request.params.petId;
+    response.send(`El ID que buscas es: ${idPet}`);
+})
+
+// Los códigos de estado son una CONVENCIÓN,
+// por lo que no es obligación seguir las reglas existentes.
+// Cada desarrollador puede implementar la lógica que guste.
+// Pero no es recomendable
+app.get('/api/cakes/:cakeId', (req, res) => {
+    const idCake = parseInt(req.params.cakeId);
+    if ( idCake > 100 ) {
+        res.status(401).send({ mensaje: 'El ID del pastel esta feo'});
+    } else {
+        const mensaje = { id: `El ID que buscas es: ${idCake}`};
+        res.send(mensaje);
+    }
+})
+
 // #4 Levantar el servidor en un puerto, por defecto el 3000
 app.listen(3000, () => {
     console.log('Server ON');
