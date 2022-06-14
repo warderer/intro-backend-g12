@@ -74,8 +74,17 @@ app.get('/api/v1/pets', (req,res) => {
     res.send(respuesta);
 })
 
+// POST
+// El post tiene la habilidad de poder enviar un BODY
+// Por defecto en express, no viene configurado para enviar el BODY
+// Para eso necesitamos realizar una configuración:
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
-
+app.post('/api/v1/post', (req, res) => {
+    console.log(req.body)
+    res.status(201).send(`Usuario Creado: ${req.body}`);
+})
 
 // #4 Levantar el servidor en un puerto, por defecto el 3000
 app.listen(3000, () => {
