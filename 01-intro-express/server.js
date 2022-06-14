@@ -1,4 +1,5 @@
 // #1 Llamar a la biblioteca de express (importarla)
+const { application } = require('express');
 const express = require('express');
 
 // #2 Crear una instancia de express
@@ -35,6 +36,46 @@ app.get('/api/cakes/:cakeId', (req, res) => {
         res.send(mensaje);
     }
 })
+
+// Query
+// Query 'URL/api/v1/pets?color=blanco&comida=croquetas'
+// Son similares a Params, pero se suelen usar para incluir más de un dato
+// Las querys son abiertas, no definimos cuantas variables nos tienen que
+// enviar ni como se llaman. La responsabilidad del Backend es SOLO
+// tomar en cuenta los adecuados
+
+app.get('/api/v1/pets', (req,res) => {
+    console.log(req.query);
+    const { color, comida } = req.query;
+    // Imaginemos que va a la base de datos y trae una lista de mascotas
+    const petsArray = [
+        {
+            id: 1,
+            name: 'Firulais',
+            color: 'blanco',
+            comida: 'croquetas'
+        },
+        {
+            id: 2,
+            name: 'Zeus',
+            color: 'gris',
+            comida: 'pescado'
+        },
+        {
+            id: 3,
+            name: 'Ronney',
+            color: 'cafe',
+            comida: 'croquetas'
+        }
+    ]
+
+    const respuesta = petsArray.filter(pet => pet.comida === comida || pet.color === color);
+
+    res.send(respuesta);
+})
+
+
+
 
 // #4 Levantar el servidor en un puerto, por defecto el 3000
 app.listen(3000, () => {
