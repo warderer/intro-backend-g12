@@ -1,6 +1,7 @@
 // #1 Llamar a la biblioteca de express (importarla)
-const { application } = require('express');
 const express = require('express');
+
+const axios = require('axios');
 
 // #2 Crear una instancia de express
 const app = express();
@@ -85,6 +86,20 @@ app.post('/api/v1/post', (req, res) => {
     console.log(req.body)
     res.status(201).send(`Usuario Creado: ${req.body}`);
 })
+
+// APIs consumen otras APIs
+app.get('/api/v1/pokemon/:count', async (req, res)=>{
+    const pokemonCount = req.params.count;
+    try {
+        const URI = `https://pokeapi.co/api/v2/pokemon?limit=${pokemonCount}&offset=0`
+        const pokeApiResponse = await axios.get(URI);
+        res.status(200).send(pokeApiResponse.data)
+    }
+    catch(err){
+        res.status(404).send({ error: err.message });
+    }
+})
+
 
 // #4 Levantar el servidor en un puerto, por defecto el 3000
 app.listen(3000, () => {
