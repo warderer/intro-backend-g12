@@ -23,7 +23,39 @@ const findAllHomes = (req, res) => {
     })
 }
 
+const findOneHome = (req, res) => {
+    ModelHomes.findOne(req.params.idHome)
+    .then((row) => {
+        res.status(200).send(row);
+    })
+    .catch((err) => {
+        res.status(400).send(err.message);
+    })
+}
+
+const updateOneHome = (req, res) => {
+
+}
+
+const destroyOneHome = (req, res) => {
+
+}
+
+const softDeleteOneHome = (req, res) => {
+
+}
+
+const findOneWithUser = (req, res) => {
+
+}
+
+
 module.exports = {
     createHome,
-    findAllHomes
+    findAllHomes,
+    findOneHome,
+    updateOneHome,
+    destroyOneHome,
+    softDeleteOneHome,
+    findOneWithUser
 }
