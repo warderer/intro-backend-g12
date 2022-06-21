@@ -18,8 +18,19 @@ const create = (bodyHome) => {
         .returning(['house_id','title','description','guest','address','rental_price','fk_user','active','created_at'])
 }
 
+const findAll = () => {
+    //Obtener todos los registros de la tabla HOMES
+    return knex
+        .select(['house_id','title','description','guest','address','rental_price','fk_user','active','created_at'])
+        .from('homes')
+        .where({ active: true }) // Traemos solo los campos que no hayamos hecho softdelete
+}
+
+
 // Paso #3 Exportar mis funciones para que sean accesibles desde el controlador
 
 module.exports = {
-    create
+    create,
+    findAll,
+
 }
