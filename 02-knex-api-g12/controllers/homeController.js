@@ -34,19 +34,43 @@ const findOneHome = (req, res) => {
 }
 
 const updateOneHome = (req, res) => {
-
+    ModelHomes.update(req.params.idHome, req.body)
+    .then((row) => {
+        res.status(200).send(row);
+    })
+    .catch((err) => {
+        res.status(400).send(err.message);
+    })
 }
 
 const destroyOneHome = (req, res) => {
-
+    ModelHomes.destroy(req.params.idHome)
+    .then((row) => {
+        res.status(204).send(row);
+    })
+    .catch((err) => {
+        res.status(400).send(err.message);
+    })
 }
 
 const softDeleteOneHome = (req, res) => {
-
+    ModelHomes.softDelete(req.params.idHome)
+    .then((row) => {
+        res.status(204).send(row);
+    })
+    .catch((err) => {
+        res.status(400).send(err.message);
+    })
 }
 
 const findOneWithUser = (req, res) => {
-
+    ModelHomes.findOneWithUser(req.params.idHome)
+    .then((row) => {
+        res.status(200).send(row);
+    })
+    .catch((err) => {
+        res.status(400).send(err.message);
+    })
 }
 
 
