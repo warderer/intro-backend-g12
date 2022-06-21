@@ -26,11 +26,53 @@ const findAll = () => {
         .where({ active: true }) // Traemos solo los campos que no hayamos hecho softdelete
 }
 
+const findOne = (houseId) => {
+    return knex
+        .select(['house_id','title','description','guest','address','rental_price','fk_user','active','created_at'])
+        .from('homes')
+        .where({ house_id: houseId })
+        .where({ active: true })
+}
+
+const update = (houseId, bodyToUpdate) => {
+    return knex
+        .update(bodyToUpdate) // La info a actualizar.
+        .from('homes')
+        .where({ house_id: houseId })
+        .returning(['house_id','title','description','guest','address','rental_price','fk_user','active','created_at'])
+}
+
+// Borrado físico de la base de datos
+const destroy = (houseId) => {
+    return knex
+        .del()//delete
+        .from('homes')
+        .where({ house_id: houseId })
+}
+
+const softDelete = (houseId) => {
+    return knex
+        .update({ active: false })
+        .from('homes')
+        .where({ house_id: houseId })
+}
+
+const findOneWithUser = (houseId) => {
+    return knex
+        .select()
+        .from('homes')
+        .join('users','users.user_id','=','homes.fk_user')
+        .where({ house_id: houseId })
+}
 
 // Paso #3 Exportar mis funciones para que sean accesibles desde el controlador
 
 module.exports = {
     create,
     findAll,
-
+    findOne,
+    update,
+    destroy,
+    softDelete,
+    findOneWithUser
 }
