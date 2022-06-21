@@ -45,8 +45,8 @@ const updateOneHome = (req, res) => {
 
 const destroyOneHome = (req, res) => {
     ModelHomes.destroy(req.params.idHome)
-    .then((row) => {
-        res.status(204).send(row);
+    .then(() => {
+        res.status(204).send();
     })
     .catch((err) => {
         res.status(400).send(err.message);
@@ -55,11 +55,11 @@ const destroyOneHome = (req, res) => {
 
 const softDeleteOneHome = (req, res) => {
     ModelHomes.softDelete(req.params.idHome)
-    .then((row) => {
-        res.status(204).send(row);
+    .then(() => {
+        res.status(204).send();
     })
     .catch((err) => {
-        res.status(400).send(err.message);
+        res.send(400).send(err.message);
     })
 }
 
